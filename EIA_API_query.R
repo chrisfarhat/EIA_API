@@ -15,6 +15,7 @@ key <- scan("/Users/jim/Documents/R/private_EIA_API_key.txt", what = "character"
 
 require(RCurl)
 require(RJSONIO)
+require(plyr)
 
 #Create API url 
 id<-paste(series,state,"-",type,".",time, sep="")
@@ -26,9 +27,27 @@ data_json<-getURL(api, followlocation = TRUE)
 #Convert JSON format to R format, then flatten structure
 data_nested<-fromJSON(data_json, nullValue="NA")[[2]]
 
+df <- ldply (data_nested, data.frame)
+
+
+
+
+ul_data<-unlist(data_nested)
+
+len<-length(ul_data-1)
+
+df <- data.frame(matrix(ul_data, nrow=len, byrow=2))
+
+
+data<-unlist(data_nested)
+
+
+
+'''
 data<- data.frame(
 	year = as.numeric(rapply(data_nested, function(x) x[1], how= "unlist")),
 	price = as.numeric(rapply(data_nested, function(x) x[2], how= "unlist")))
 data<-data[-1,]
+'''
 
 plot(data, main = id, type = "b")
