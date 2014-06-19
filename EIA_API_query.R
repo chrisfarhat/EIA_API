@@ -11,7 +11,7 @@ type = "ALL"
 #Time A = Annual, M = Monthly, Q = Quarterly
 time = "A"
 #API Key
-key <- "*******************"
+key <- scan("/Users/jim/Documents/R/private_EIA_API_key.txt", what = "character")
 
 require(RCurl)
 require(RJSONIO)
@@ -32,5 +32,3 @@ data<- data.frame(
 data<-data[-1,]
 
 plot(data, main = id, type = "b")
-
-}
