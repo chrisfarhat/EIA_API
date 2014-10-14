@@ -1,6 +1,9 @@
 # script to access the EIA's beta API, convert data, then plot
 # requires a unique API key which can be obtained at: http://www.eia.gov/beta/api/
 
+require(RCurl)
+require(plyr)
+require(jsonlite)
 
 #series
 series = "ELEC.PRICE."
@@ -12,11 +15,6 @@ type = "ALL"
 time = "A"
 #API Key
 key <- scan("/Users/jim/Documents/R/private_EIA_API_key.txt", what = "character")
-
-require(RCurl)
-#require(RJSONIO)
-require(plyr)
-require(jsonlite)
 
 #Create API url 
 id<-paste(series,state,"-",type,".",time, sep="")
