@@ -24,7 +24,12 @@ api<-paste("http://api.eia.gov/series/data?api_key=",key,"&series_id=",id, sep="
 data_json<-getURL(api, followlocation = TRUE)
 
 #Convert JSON format to R format, then flatten structure
-data <- fromJSON(data_json, flatten = true)
-data
+data_nested <- fromJSON(data_json)
+data_flat <- flatten(as.data.frame(data_nested))
+data <- data_flat$series_data.data
+data<-data.frame(data)
+names(data)<-c('YEAR', 'ELEC.PRICE')
+data$ELEC.PRICE<-as.numeric(data$ELEC.PRICE)
+data$YEAR<-as.Date(data$YEAR, "%Y")
 
 plot(data, main = id, type = "b")
