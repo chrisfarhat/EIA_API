@@ -1,3 +1,5 @@
+#figuring out how to determine category codes
+
 require(RCurl)
 require(plyr)
 require(jsonlite)
