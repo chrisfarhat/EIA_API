@@ -12,12 +12,12 @@ state = "TX"
 #Type All = All, Residential = 
 type = "ALL"
 #Time A = Annual, M = Monthly, Q = Quarterly
-time = "M"
+time_step = "A"
 #API Key
 key <- scan("/Users/jim/Documents/R/private_EIA_API_key.txt", what = "character")
 
 #Create API url 
-id<-paste(series,state,"-",type,".",time, sep="")
+id<-paste(series,state,"-",type,".",time_step, sep="")
 api<-paste("http://api.eia.gov/series/data?api_key=",key,"&series_id=",id, sep="")
 
 #Get data via RCurl
@@ -28,8 +28,13 @@ data_nested <- fromJSON(data_json)
 data_flat <- flatten(as.data.frame(data_nested))
 data <- data_flat$series_data.data
 data<-data.frame(data)
+
+#need to pass names from selected series as variables instead of specifying string?
+
 names(data)<-c('YEAR', 'ELEC.PRICE')
+
 data$ELEC.PRICE<-as.numeric(data$ELEC.PRICE)
 data$YEAR<-as.Date(data$YEAR, "%Y")
 
+#graph test
 plot(data, main = id, type = "b")
