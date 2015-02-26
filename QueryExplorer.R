@@ -9,7 +9,7 @@ library(jsonlite)
 key <- scan("/Users/jim/Documents/R/private_EIA_API_key.txt", what = "character")
 
 ############### Category Query ##################
-api <- paste("http://api.eia.gov/category/?api_key=", key, "&category_id=714755","&out=json", sep = "")
+api <- paste("http://api.eia.gov/category/?api_key=", key, "&category_id=0","&out=json", sep = "")
 
 data_json<-getURL(api, followlocation = TRUE)
 
@@ -28,6 +28,7 @@ api<-paste("http://api.eia.gov/series/categories/?series_id=",id,"&api_key=",key
 data_json<-getURL(api, followlocation = TRUE)
 
 data_nested <- fromJSON(data_json)
+data_nested
 
 ############### Series Query ##################
 series = "ELEC.PRICE."
